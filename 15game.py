@@ -1,12 +1,16 @@
 ''' Structural Game for 15 - Puzzle with different difficulty levels'''
 from random import randint
 
+# Glossary:
+#   tell    : print for the user
+#   she     : the user
 
 class Puzzle:
     def __init__(self):
         self.items = {} # dict of pieces
         self.position = None # space position
 
+    # why not call it printBoard
     def main_frame(self):
         """Print the board
 
@@ -88,9 +92,11 @@ class Puzzle:
             self.change(lst1[randint(0, len(lst1)-1)])
 
 
+    # get the position from the self.var,
+    # not as an argument.
     def valid_moves(self):
         """ Given the blank's position,
-        return all positions you can move to,
+        return all pieces you can move to,
         as a tuple.
         """
         # up    : -4
@@ -144,15 +150,21 @@ g.build_board(int(input('Enter the difficulty : 0 1 2\n2 '
                         '=> highest 0=> lowest\n')))
 g.main_frame()
 print('Enter 0 to exit')
+
 while True:
     print('Hello user:\nTo change the position just enter the no. near it')
+    # tuple of moves
     lst = g.valid_moves()
     lst1 = []
+    # turn from a string into a number(index)
+    # tell where she can move.
     for i in lst:
         lst1.append(int(i.strip()))
         print(i.strip(), '\t', end='')
+    # empty line
     print()
     x = int(input())
+    # validate and act
     if x == 0:
         break
     elif x not in lst1:

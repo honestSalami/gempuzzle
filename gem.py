@@ -182,9 +182,9 @@ class GemBoard():
         Else, return True
         """
         self.pBoard()
+        print("where to?")
         moveTo = input(
-                "where to?\n"
-                +self.usrCross()
+                self.usrCross()
                 +": " )
         if moveTo == '':
             return False

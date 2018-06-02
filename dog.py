@@ -1,5 +1,6 @@
 #!  /data/data/com.termux/files/usr/bin/python
 
+from gem import GemBoard
 
 ava = GemBoard(4, 4)
 

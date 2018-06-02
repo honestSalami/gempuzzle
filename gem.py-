@@ -80,28 +80,3 @@ class GemBoard():
         for y in range(self.YLEN):
             print(spaces.format(
                     *self.board[y] ) )
-
-ava = GemBoard(4, 4)
-
-print()
-ava.pBoard()
-ava.up()
-
-print()
-ava.pBoard()
-ava.left()
-
-print()
-ava.pBoard()
-ava.left()
-
-print()
-ava.pBoard()
-ava.down()
-
-print()
-ava.pBoard()
-ava.right()
-
-print()
-ava.pBoard()

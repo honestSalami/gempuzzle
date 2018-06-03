@@ -5,13 +5,13 @@
 # tw=45
 #############################################
 
-# TODO validate, easy move, win
+# TODO easy move, win
 
 
 ### Foundational Functions
 def subGroup(lst, size):
-    """Group the elements of lst into sublists
-    of size size.
+    """Group the elements of lst into 
+    sublists of size size.
     """
     outLst = []
     tmpLst = list()
@@ -26,6 +26,7 @@ def subGroup(lst, size):
         tmpLst = list() # weird
 
     return outLst
+
 
 
 ### Piece class. This is what the blank is
@@ -69,15 +70,28 @@ class GemBoard():
 
 
 ### Movement. How do you move?
+    def xchgBoard(self,
+            yA, xA,
+            yB, xB ):
+        """Exchange positions of two pieces
+        in the board.
+        """
+        # point A
+        pA = self.board[yA][xA]
+        pB = self.board[yB][xB]
+        self.board[yA][xA] = pB
+        self.board[yB][xB] = pA
+
     def move(self, yTo, xTo):
         """Exchange piece in position
         (yTo xTo) with blank.
         """
-        tmp = self.board[yTo][xTo]
-        self.board[yTo][xTo] = 0
-        self.board\
-                [self.blank.y]\
-                [self.blank.x] = tmp
+        if yTo < 0 or xTo < 0:
+            raise IndexError
+
+        self.xchgBoard(
+                yTo, xTo,
+                self.blank.y, self.blank.x )
         self.blank.shift(yTo, xTo)
 
     # these are all, kinda, nullary functions
@@ -128,12 +142,11 @@ class GemBoard():
 
 ### User movement. Where can they move
 
-    # fun list
     def whereCanIGo(self):
         """In my current position, where can
         the blank move?
 
-        Returns a list of functions.
+        Return a list of strings
         """
         whereIndeed = []
         if self.blank.y > 0:
@@ -173,19 +186,37 @@ class GemBoard():
             print(spaces.format(
                     *self.board[y] ) )
 
-### User interaction cycle. Ask and do.
-    def step(self):
-        """Print the board,
-        get user input,
-        if none, stop,
-        if good, move.
+### Validate. Did the right thing come in?
 
+    def insist():
+        """Decorator. Run fun until it does
+        not return one of the exceptions.
+        """
+        def decorator(fun):
+            def wrapper(*args, **kws):
+                while True:
+                    try:
+                        return fun(*args, **kws)
+                    # bad, hard code
+                    except IndexError:
+                        msg = "\tCan'g go\n"
+                        print(msg)
+                    except KeyError:
+                        msg = "\tundefined\n"
+                        print(msg)
+            return wrapper
+        return decorator
+
+### User interaction cycle. Ask and do.
+    
+    @insist()
+    def readAndRun(self):
+        """Get user input.
         If they input an empty line, 
         return False.
-        Else, return True
+        if good, move and return True.
+        if bad, ask again.
         """
-        self.pBoard()
-        print("where to?")
         moveTo = input(
                 self.usrCross()
                 +": " )
@@ -195,11 +226,17 @@ class GemBoard():
         return True
     
     def main(self):
-        """Loop until false.
+        """Loop until false:
+        print matrix,
+        change matrix.
         """
         again = True
         while again:
-            again = self.step()
+            self.pBoard()
+            print("where to?")
+            again = self.readAndRun()
+
+###
 
 
 ava = GemBoard(4, 4)

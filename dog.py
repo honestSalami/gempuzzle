@@ -1,28 +1,10 @@
-#!  /data/data/com.termux/files/usr/bin/python
+#!  /usr/bin/python3
 
-from gem import GemBoard
 
-ava = GemBoard(4, 4)
+ava = list(range(10))
 
-print()
-ava.pBoard()
-ava.up()
+def fun():
+    raise ValueError('hithere')
+    print("hellow rold")
 
-print()
-ava.pBoard()
-ava.left()
-
-print()
-ava.pBoard()
-ava.left()
-
-print()
-ava.pBoard()
-ava.down()
-
-print()
-ava.pBoard()
-ava.right()
-
-print()
-ava.pBoard()
+fun()

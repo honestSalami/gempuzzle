@@ -66,7 +66,7 @@ class GemBoard():
         self.moveMap = self.mapFunc()
 
 
-### Movement
+### Movement. How do you move?
     def move(self, yTo, xTo):
         """Exchange piece in position
         (yTo xTo) with blank.
@@ -107,7 +107,7 @@ class GemBoard():
         self.move(
                 self.blank.y,
                 self.blank.x + 1 )
-### Movement mapping
+### Move mapping. What message makes me move
     def mapFunc(self):
         return {
                 "up"    :   self.up,
@@ -124,7 +124,7 @@ class GemBoard():
                 "l"     :   "right"
                 }
 
-### User movement. Their movement
+### User movement. Where can they move
 
     # fun list
     def whereCanIGo(self):
@@ -161,7 +161,7 @@ class GemBoard():
         """
         self.moveMap[whereTo]()
 
-### Printing
+### Printing. Show me the board.
     def pBoard(self):
         """Print the board, simply.
         """
@@ -170,7 +170,7 @@ class GemBoard():
             print(spaces.format(
                     *self.board[y] ) )
 
-### User interaction cycle
+### User interaction cycle. Ask and do.
     def step(self):
         """Print the board,
         get user input,

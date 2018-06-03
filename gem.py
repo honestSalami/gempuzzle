@@ -5,6 +5,8 @@
 # tw=45
 #############################################
 
+# TODO validate, easy move, win
+
 
 ### Foundational Functions
 def subGroup(lst, size):
@@ -157,7 +159,8 @@ class GemBoard():
         return crossRoad
 
     def doMove(self, whereTo):
-        """Take a move key, return a move fun.
+        """Take a move key,
+        execute a move function.
         """
         self.moveMap[whereTo]()
 

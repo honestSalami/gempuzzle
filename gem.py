@@ -52,6 +52,7 @@ class GemBoard():
         set the LENgth and the Axis,
         construct the blank,
         place the blank on the board.
+        Set mappings.
         """
         last = yLen*xLen
         lst = range(1, last + 1)
@@ -132,6 +133,9 @@ class GemBoard():
 
 ### Move mapping. What message makes me move
     def mapFunc(self):
+        """Map movements with movemement
+        functions.
+        """
         return {
                 "up"    :   self.up,
                 "down"  :   self.down,
@@ -144,6 +148,9 @@ class GemBoard():
 ### User movement. Where can they move
 
     def fastKeyFun(self):
+        """Map keyboard shortcuts with 
+        movements and vice versa.
+        """
         return {
                 "k"     :   "up",
                 "j"     :   "down",
@@ -197,6 +204,9 @@ class GemBoard():
 ### Difficulty. How hard can it get?
 
     def diffMap(self):
+        """Map difficulty options with 
+        number of scramblings.
+        """
         return {
                 0   :   0,
                 1   :   10,
@@ -205,15 +215,23 @@ class GemBoard():
                 }
 
     def rndMove(self):
+        """Make one random move.
+        """
         self.doMove(
                 choice(
                     self.whereCanIGo() ) )
 
     def scramble(self, iterations):
+        """make iterations random moves.
+        """
         for i in range(iterations):
             self.rndMove()
 
     def howDifficult(self, howD):
+        """Translate a difficulty option to
+        a number of scramblings, and 
+        scramble.
+        """
         self.scramble(self.diff[howD])
 
 
@@ -272,6 +290,12 @@ class GemBoard():
 
     @insist()
     def doDifficulty(self):
+        """Get the difficulty from User.
+
+        Print difficulty options,
+        execute scrambling based on
+        difficulty.
+        """
         msg = "How hard do you want it? "
         for d, it in self.diff.items():
             msg += str(d)+" "
@@ -283,6 +307,7 @@ class GemBoard():
     def main(self):
         """Scramble board from dificulty,
         Loop until false:
+        or until win!
         print matrix,
         change matrix.
         """
@@ -299,6 +324,11 @@ class GemBoard():
             again = self.readAndRun()
 
     def win(self):
+        """If the board is ordered, you WIN!
+
+        Check if a piece's linear position
+        is equal to its piece value.
+        """
         brd = self.board
         test = []
         for y in range(self.YLEN):

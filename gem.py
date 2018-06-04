@@ -180,8 +180,7 @@ class GemBoard():
         (up, down, left, right),
         execute a move function.
         """
-        mappedTo = self.fastMap[whereTo] 
-        self.moveMap[mappedTo]()
+        self.moveMap[whereTo]()
 
     def usrCross(self):
         """a string to tell them where they 
@@ -267,7 +266,8 @@ class GemBoard():
                 +": " )
         if moveTo == '':
             return False
-        self.doMove(moveTo)
+        mappedTo = self.fastMap[moveTo] 
+        self.doMove(mappedTo)
         return True
 
     @insist()
@@ -277,8 +277,8 @@ class GemBoard():
             msg += str(d)+" "
 
         dif = int(input(msg))
+        print(dif)
         self.howDifficult(dif)
-        return dif
 
     def main(self):
         """Scramble board from dificulty,
@@ -293,6 +293,9 @@ class GemBoard():
         while again:
             self.pBoard()
             print("where to?")
+            if self.win():
+                print("you win!")
+                break
             again = self.readAndRun()
 
     def win(self):
@@ -300,9 +303,11 @@ class GemBoard():
         test = []
         for y in range(self.YLEN):
             for x in range(self.XLEN):
-                if (y*self.XLEN + x + 1 !=
+                if (y*self.XLEN + x + 1 ==
                         brd[y][x] ):
                     test.append(True)
+                else:
+                    test.append(False)
         if all(test[:-1]):
             return True
         else:

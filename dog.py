@@ -3,8 +3,6 @@
 
 ava = list(range(10))
 
-def fun():
-    raise ValueError('hithere')
-    print("hellow rold")
-
-fun()
+class Spleen():
+    def p():
+        pri

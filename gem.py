@@ -271,7 +271,8 @@ class GemBoard():
         return dif
 
     def main(self):
-        """Loop until false:
+        """Scramble board from dificulty,
+        Loop until false:
         print matrix,
         change matrix.
         """

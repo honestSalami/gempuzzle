@@ -137,16 +137,22 @@ class GemBoard():
                 "right" :   self.right
                 }
 
-    def usrFunc(self):
+
+
+### User movement. Where can they move
+
+    def fastKeyFun(self):
         return {
                 "k"     :   "up",
                 "j"     :   "down",
                 "h"     :   "left",
-                "l"     :   "right"
+                "l"     :   "right",
+
+                "up"    :   "k" 
+                "down"  :   "j"
+                "left"  :   "h"
+                "right" :   "l"
                 }
-
-
-### User movement. Where can they move
 
     def whereCanIGo(self):
         """In my current position, where can
@@ -172,6 +178,7 @@ class GemBoard():
         (up, down, left, right),
         execute a move function.
         """
+        # mappedTo = fastMap[whereTo] 
         self.moveMap[whereTo]()
 
     def usrCross(self):
@@ -180,6 +187,7 @@ class GemBoard():
         """
         crossRoad = ""
         for way in self.whereCanIGo():
+            # mappedBack = fastMap[way]
             crossRoad += way+" "
 
         return crossRoad

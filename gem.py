@@ -7,6 +7,8 @@
 
 # TODO easy move, win
 
+from random import choice
+
 
 ### Foundational Functions
 def subGroup(lst, size):
@@ -26,7 +28,6 @@ def subGroup(lst, size):
         tmpLst = list() # weird
 
     return outLst
-
 
 
 ### Piece class. This is what the blank is
@@ -66,7 +67,9 @@ class GemBoard():
         self.board\
                 [self.yAxis]\
                 [self.xAxis] = 0
+
         self.moveMap = self.mapFunc()
+        self.diff = self.diffMap()
 
 
 ### Movement. How do you move?
@@ -123,6 +126,8 @@ class GemBoard():
         self.move(
                 self.blank.y,
                 self.blank.x + 1 )
+
+
 ### Move mapping. What message makes me move
     def mapFunc(self):
         return {
@@ -139,6 +144,7 @@ class GemBoard():
                 "h"     :   "left",
                 "l"     :   "right"
                 }
+
 
 ### User movement. Where can they move
 
@@ -161,6 +167,13 @@ class GemBoard():
 
         return whereIndeed
 
+    def doMove(self, whereTo):
+        """Take a move key
+        (up, down, left, right),
+        execute a move function.
+        """
+        self.moveMap[whereTo]()
+
     def usrCross(self):
         """a string to tell them where they 
         can go.
@@ -171,11 +184,29 @@ class GemBoard():
 
         return crossRoad
 
-    def doMove(self, whereTo):
-        """Take a move key,
-        execute a move function.
-        """
-        self.moveMap[whereTo]()
+
+### Difficulty. How hard can it get?
+
+    def diffMap(self):
+        return {
+                0   :   0,
+                1   :   10,
+                2   :   50,
+                3   :   100,
+                }
+
+    def rndMove(self):
+        self.doMove(
+                choice(
+                    self.whereCanIGo() ) )
+
+    def scramble(self, iterations):
+        for i in range(iterations):
+            self.rndMove()
+
+    def howDifficult(self, howD):
+        self.scramble(self.diff[howD])
+
 
 ### Printing. Show me the board.
     def pBoard(self):
@@ -185,6 +216,7 @@ class GemBoard():
         for y in range(self.YLEN):
             print(spaces.format(
                     *self.board[y] ) )
+
 
 ### Validate. Did the right thing come in?
 
@@ -204,8 +236,11 @@ class GemBoard():
                     except KeyError:
                         msg = "\tundefined\n"
                         print(msg)
+                    except ValueError:
+                        print("that is not a number")
             return wrapper
         return decorator
+
 
 ### User interaction cycle. Ask and do.
     
@@ -224,12 +259,25 @@ class GemBoard():
             return False
         self.doMove(moveTo)
         return True
-    
+
+    @insist()
+    def doDifficulty(self):
+        msg = "How hard do you want it? "
+        for d, it in self.diff.items():
+            msg += str(d)+" "
+
+        dif = int(input(msg))
+        self.howDifficult(dif)
+        return dif
+
     def main(self):
         """Loop until false:
         print matrix,
         change matrix.
         """
+
+        self.doDifficulty()
+
         again = True
         while again:
             self.pBoard()

@@ -5,7 +5,7 @@
 # tw=45
 #############################################
 
-# TODO easy move, win
+# TODO  win
 
 from random import choice
 
@@ -294,6 +294,21 @@ class GemBoard():
             self.pBoard()
             print("where to?")
             again = self.readAndRun()
+
+    def win(self):
+        brd = self.board
+        test = []
+        for y in range(self.YLEN):
+            for x in range(self.XLEN):
+                if (y*self.XLEN + x + 1 !=
+                        brd[y][x] ):
+                    test.append(True)
+        if all(test[:-1]):
+            return True
+        else:
+            return False
+        
+
 
 ###
 

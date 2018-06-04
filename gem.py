@@ -1,4 +1,4 @@
-
+#!/data/data/com.termux/files/usr/bin/python
 
 # the matrix for the gem puzzle, and the
 # blank moving operations.
@@ -71,6 +71,8 @@ class GemBoard():
         self.moveMap = self.mapFunc()
         self.diff = self.diffMap()
 
+        ##
+        self.fastMap = self.fastKeyFun() 
 
 ### Movement. How do you move?
     def xchgBoard(self,
@@ -148,9 +150,9 @@ class GemBoard():
                 "h"     :   "left",
                 "l"     :   "right",
 
-                "up"    :   "k" 
-                "down"  :   "j"
-                "left"  :   "h"
+                "up"    :   "k",
+                "down"  :   "j",
+                "left"  :   "h",
                 "right" :   "l"
                 }
 
@@ -178,8 +180,8 @@ class GemBoard():
         (up, down, left, right),
         execute a move function.
         """
-        # mappedTo = fastMap[whereTo] 
-        self.moveMap[whereTo]()
+        mappedTo = self.fastMap[whereTo] 
+        self.moveMap[mappedTo]()
 
     def usrCross(self):
         """a string to tell them where they 
@@ -187,8 +189,8 @@ class GemBoard():
         """
         crossRoad = ""
         for way in self.whereCanIGo():
-            # mappedBack = fastMap[way]
-            crossRoad += way+" "
+            mappedBack = self.fastMap[way]
+            crossRoad += mappedBack+" "
 
         return crossRoad
 

@@ -1,15 +1,121 @@
 
 ### Foundational Functions
 ### Piece class. This is what the blank is
-### Board Class
-### Movement. How do you move?
-### Move mapping. What message makes me move
-### User movement. Where can they move
-### Difficulty. How hard can it get?
-### Printing. Show me the board.
-### Validate. Did the right thing come in?
-### User interaction cycle. Ask and do.
 
 the blank is a class of its own. Mostly so that its easy to acces the y,x coordinates and modify them automagically.
 
 there are 4 predefined movement functions (up, down, left, right) and they are really only called though the dictionary that maps the movement 
+
+#$$
+Glossary
+Piece: one of the numbers in the matrix,
+that can be moved around. The blank is a 
+special piece, I refer to it as blank, and
+often the piece that is going to be 
+exchanged with it I call THE piece.
+
+#$$ Foundational Functions
+Just the function that makes a matrix from a
+list of pieces.
+
+#$$ Board class
+The full implementation of the gem board
+I've tried to split it into as many
+subpiecess as I've thought it mdkes sense.
+Several functions later on are defined as
+mappings that are called in __init__, so
+reading that code can be a little jumpy. I
+wanted to define things in the section they
+were most relevant, as instance variables.
+
+Mappings are important. There are two types:
+   user input to internal representation
+      str to str (for movement)
+      int to int (for difficulty)
+   internal representation to function
+      str to fun (all for moving a piece)
+
+Each mapping is defined in a section
+appropriate for it (like, the movement maps
+are in Move mapping, and the difficulty maps
+are in Difficulty). They are created as a
+function that returns the mapping, and this
+function is called in __init__ to define an
+instance attribute.
+
+Movement is connected with User movement by
+the mapFunc dictionary, mapping a string that
+represents an action to a function that
+performs it. The function is returned, to
+doMove, and executed. The final piece of the
+movement puzzle is that in readAndRun() there
+is a final mapping from what the user
+inputs to move the blank, and the internal
+representation of that action. (k to up, for
+example).
+There is another place where that conversion
+happens, usrCross. Take the internal
+representation and turn it into a fastMap
+that the user can read. I hate that the two
+places are not connected more easily. Like
+one after the other, or inside a single
+conversion function.
+
+#$$ Movement. How do you move?
+There is a general move function, and 4
+specific implementations. The implementations
+are saved into a mapping, and retreived with
+the name of the internal representation of
+the movement.
+
+#$$ Move mapping. What message makes me move
+The dictionary that associates the internal
+representation to the movement action. These
+are all bad names, too long.
+
+#$$ User movement. Where can they move
+Tell the user where they can move, and move
+them to where they want.
+
+#$$ Difficulty. How hard can it get?
+Scramble the board to make things more
+challenging. The higher the numbers, the more
+iterations, the harder it is.
+
+#$$ Printing. Show me the board.
+A simple printing function. Though I admit
+that the way to pass a list to format is
+something I dont really understand.
+
+#$$ Validate. Did the right thing come in?
+This one was the hardest parts.
+
+There is a general validation and repetition
+function called insist(). It is a decorator.
+Given a bunch of exceptions, it repeats the
+input asking. It is a decorator, so I applied
+it to any function that required user input
+(readAndRun() and doDifficulty()).
+
+The most annoying thing is that I wanted to
+pass a list of exceptions to it as an
+argument, instead of hardcoding it, so that
+for each function it was called over I could
+check for a different exception, and return a
+different message. But I couldnt figure out
+how to pass exceptions as arguments, with a
+special message to be printed for each
+exception. So that was it.
+
+#$$ Win. Have I won yet?
+The winning testing function. It compares the
+piece value that is with the piece value that
+should be, which is the ordered list of
+numbers from 1 to yLen*xLen-1.
+
+#$$ User interaction cycle. Ask and do.
+Here are the functiosn that directly interact
+with the user. They ask for the input
+(difficulty and movement), validate it, and
+repeat te cycle of movement until they win,
+or press enter in an empty line.

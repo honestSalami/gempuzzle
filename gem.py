@@ -3,14 +3,14 @@
 # the matrix for the gem puzzle, and the
 # blank moving operations.
 # tw=45
-#############################################
+#$$##########################################
 
 # TODO  win
 
 from random import choice
 
 
-### Foundational Functions
+#$$ Foundational Functions
 def subGroup(lst, size):
     """Group the elements of lst into 
     sublists of size size.
@@ -30,7 +30,7 @@ def subGroup(lst, size):
     return outLst
 
 
-### Piece class. This is what the blank is
+#$$ Piece class. This is what the blank is
 class Piece():
     def __init__(self, yPos, xPos):
         self.y = yPos
@@ -41,7 +41,7 @@ class Piece():
         self.x = xNew
 
 
-### Board Class
+#$$ Board Class
 class GemBoard():
     # Axis is the index, starts from 0
     # Len is the length, starts from 1
@@ -75,7 +75,7 @@ class GemBoard():
         ##
         self.fastMap = self.fastKeyFun() 
 
-### Movement. How do you move?
+#$$ Movement. How do you move?
     def xchgBoard(self,
             yA, xA,
             yB, xB ):
@@ -131,7 +131,7 @@ class GemBoard():
                 self.blank.x + 1 )
 
 
-### Move mapping. What message makes me move
+#$$ Move mapping. What message makes me move
     def mapFunc(self):
         """Map movements with movemement
         functions.
@@ -145,7 +145,7 @@ class GemBoard():
 
 
 
-### User movement. Where can they move
+#$$ User movement. Where can they move
 
     def fastKeyFun(self):
         """Map keyboard shortcuts with 
@@ -192,6 +192,9 @@ class GemBoard():
     def usrCross(self):
         """a string to tell them where they 
         can go.
+
+        Take the internal representation
+        and turn it to fastMap.
         """
         crossRoad = ""
         for way in self.whereCanIGo():
@@ -201,7 +204,7 @@ class GemBoard():
         return crossRoad
 
 
-### Difficulty. How hard can it get?
+#$$ Difficulty. How hard can it get?
 
     def diffMap(self):
         """Map difficulty options with 
@@ -235,9 +238,11 @@ class GemBoard():
         self.scramble(self.diff[howD])
 
 
-### Printing. Show me the board.
+#$$ Printing. Show me the board.
     def pBoard(self):
         """Print the board, simply.
+
+        Print each line of the board.
         """
         spaces = self.XLEN*"\t{}"
         for y in range(self.YLEN):
@@ -245,7 +250,7 @@ class GemBoard():
                     *self.board[y] ) )
 
 
-### Validate. Did the right thing come in?
+#$$ Validate. Did the right thing come in?
 
     def insist():
         """Decorator. Run fun until it does
@@ -268,8 +273,30 @@ class GemBoard():
             return wrapper
         return decorator
 
+#$$ Win. Have I won yet?
 
-### User interaction cycle. Ask and do.
+    def win(self):
+        """If the board is ordered, you WIN!
+
+        Check if a piece's linear position
+        is equal to its piece value.
+        """
+        brd = self.board
+        test = []
+        for y in range(self.YLEN):
+            for x in range(self.XLEN):
+                if (y*self.XLEN + x + 1 ==
+                        brd[y][x] ):
+                    test.append(True)
+                else:
+                    test.append(False)
+        if all(test[:-1]):
+            return True
+        else:
+            return False
+        
+
+#$$ User interaction cycle. Ask and do.
     
     @insist()
     def readAndRun(self):
@@ -278,6 +305,8 @@ class GemBoard():
         return False.
         if good, move and return True.
         if bad, ask again.
+
+        Fast mapping is done here.
         """
         moveTo = input(
                 self.usrCross()
@@ -323,31 +352,10 @@ class GemBoard():
                 break
             again = self.readAndRun()
 
-    def win(self):
-        """If the board is ordered, you WIN!
 
-        Check if a piece's linear position
-        is equal to its piece value.
-        """
-        brd = self.board
-        test = []
-        for y in range(self.YLEN):
-            for x in range(self.XLEN):
-                if (y*self.XLEN + x + 1 ==
-                        brd[y][x] ):
-                    test.append(True)
-                else:
-                    test.append(False)
-        if all(test[:-1]):
-            return True
-        else:
-            return False
-        
-
-
-###
+#$$
 
 
 ava = GemBoard(4, 4)
 
-
+ava.main()

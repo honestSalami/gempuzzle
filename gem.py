@@ -5,7 +5,7 @@
 # tw=45
 #$$##########################################
 
-# TODO  win
+# TODO  have insist() accept exceptions and messages to those exceptions as arguments
 
 from random import choice
 

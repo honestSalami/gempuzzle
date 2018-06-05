@@ -1,0 +1,15 @@
+
+### Foundational Functions
+### Piece class. This is what the blank is
+### Board Class
+### Movement. How do you move?
+### Move mapping. What message makes me move
+### User movement. Where can they move
+### Difficulty. How hard can it get?
+### Printing. Show me the board.
+### Validate. Did the right thing come in?
+### User interaction cycle. Ask and do.
+
+the blank is a class of its own. Mostly so that its easy to acces the y,x coordinates and modify them automagically.
+
+there are 4 predefined movement functions (up, down, left, right) and they are really only called though the dictionary that maps the movement 
